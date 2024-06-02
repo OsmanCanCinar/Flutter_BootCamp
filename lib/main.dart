@@ -63,13 +63,14 @@ class _HomePageState extends State<HomePage> {
     }));
   }
 
-  void _navigateToMessagePage(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+  Future<void> _navigateToMessagePage(BuildContext context) async {
+    await Navigator.of(context).push(MaterialPageRoute(builder: (context) {
       return MessagesPage(
         title: 'Students',
         repository: messagesRepository,
       );
     }));
+    setState(() {}); // Before riverpod
   }
 
   @override
@@ -134,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                   // Navigator.of(context).pushNamed('/messages');
                   _navigateToMessagePage(context);
                 },
-                child: Text("${messagesRepository.messages.length} Messages")),
+                child: Text("${messagesRepository.newMessageCount} Messages")),
           ],
         ),
       ),

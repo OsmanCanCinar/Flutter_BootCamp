@@ -28,8 +28,12 @@ class MessagesRepository {
       time: DateTime.now().subtract(const Duration(minutes: 1)),
     ),
     Message(
-        message: "Sure, why not John. I'll be ready in 15 mins",
+        message: "Sure, why not John.", sender: "Kate", time: DateTime.now()),
+    Message(
+        message: "I'll be ready in 15 mins.",
         sender: "Kate",
         time: DateTime.now()),
   ];
+
+  int newMessageCount = 4;
 }

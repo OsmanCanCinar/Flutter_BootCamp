@@ -24,15 +24,15 @@ class _TeachersPageState extends State<TeachersPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const PhysicalModel(
+            PhysicalModel(
               color: Colors.white,
               elevation: 4,
               child: Center(
                 child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 32.0, horizontal: 32.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 32.0, horizontal: 32.0),
                   child: Text(
-                    '25 Teachers',
+                    "${widget.repository.teachers.length} Teachers",
                   ),
                 ),
               ),

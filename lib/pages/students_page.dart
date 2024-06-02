@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_skeleton/models/student.dart';
 import 'package:flutter_skeleton/repositories/students_repository.dart';
 
 class StudentsPage extends StatefulWidget {
@@ -27,36 +28,72 @@ class _StudentsPageState extends State<StudentsPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const PhysicalModel(
+            PhysicalModel(
               color: Colors.white,
               elevation: 4,
               child: Center(
                 child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 32.0, horizontal: 32.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 32.0, horizontal: 32.0),
                   child: Text(
-                    '25 Students',
+                    "${widget.repository.students.length} Students",
                   ),
                 ),
               ),
             ),
             Expanded(
               child: ListView.separated(
-                itemBuilder: (context, index) => ListTile(
-                  leading: const Text('👨🏻‍🦱 👩🏻'),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.favorite_border),
-                  ),
-                  title: const Text('Can'),
+                itemBuilder: (context, index) => StudentRow(
+                  student: widget.repository.students[index],
+                  repository: widget.repository,
                 ),
                 separatorBuilder: (context, index) => const Divider(),
-                itemCount: 25,
+                itemCount: widget.repository.students.length,
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class StudentRow extends StatefulWidget {
+  final Student student;
+  final StudentsRepository repository;
+
+  const StudentRow({
+    super.key,
+    required this.student,
+    required this.repository,
+  });
+
+  @override
+  State<StudentRow> createState() => _StudentRowState();
+}
+
+class _StudentRowState extends State<StudentRow> {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: IntrinsicWidth(
+          child: Center(
+              child: Text(widget.student.gender == 'male' ? '👨🏻‍' : '👩🏻'))),
+      trailing: IconButton(
+        onPressed: () {
+          setState(() {
+            if (widget.repository.isLiked(widget.student)) {
+              widget.repository.dislike(widget.student);
+            } else {
+              widget.repository.like(widget.student);
+            }
+          });
+        },
+        icon: Icon(widget.repository.isLiked(widget.student)
+            ? Icons.favorite
+            : Icons.favorite_border),
+      ),
+      title: Text('${widget.student.name} ${widget.student.surname}'),
     );
   }
 }
