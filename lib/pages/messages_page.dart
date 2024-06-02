@@ -5,11 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_skeleton/repositories/messages_repository.dart';
 
 class MessagesPage extends StatefulWidget {
   final String title;
 
-  const MessagesPage({super.key, required this.title});
+  const MessagesPage(
+      {super.key, required this.title, required MessagesRepository repository});
 
   @override
   State<MessagesPage> createState() => _MessagesPageState();
@@ -63,22 +65,21 @@ class _MessagesPageState extends State<MessagesPage> {
               children: [
                 Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: DecoratedBox(
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10.0))),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          )),
-                    )
-                ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: DecoratedBox(
+                      decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0))),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      )),
+                )),
                 Padding(
                   padding: const EdgeInsets.only(right: 1.0),
                   child: IconButton(
