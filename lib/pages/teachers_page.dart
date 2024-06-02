@@ -17,11 +17,11 @@ class _TeachersPageState extends State<TeachersPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            PhysicalModel(
+            const PhysicalModel(
               color: Colors.white,
               elevation: 4,
               child: Center(
@@ -32,6 +32,20 @@ class _TeachersPageState extends State<TeachersPage> {
                     '25 Teachers',
                   ),
                 ),
+              ),
+            ),
+            Expanded(
+              child: ListView.separated(
+                itemBuilder: (context, index) => ListTile(
+                  leading: const Text('👨🏻‍🦱 👩🏻'),
+                  trailing: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.favorite_border),
+                  ),
+                  title: const Text('Can'),
+                ),
+                separatorBuilder: (context, index) => const Divider(),
+                itemCount: 25,
               ),
             ),
           ],

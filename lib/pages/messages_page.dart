@@ -27,6 +27,7 @@ class _MessagesPageState extends State<MessagesPage> {
         children: [
           Expanded(
             child: ListView.builder(
+              reverse: true,
               itemBuilder: (context, index) {
                 bool isCurrentUser = Random().nextBool();
                 bool isShortText = Random().nextBool();
