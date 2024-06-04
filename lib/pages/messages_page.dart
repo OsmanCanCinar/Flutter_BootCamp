@@ -15,10 +15,10 @@ class MessagesPage extends ConsumerStatefulWidget {
 }
 
 class _MessagesPageState extends ConsumerState<MessagesPage> {
-
   @override
   void initState() {
-    ref.read(newMessageCountProvider.notifier).resetCount();
+    Future.delayed(Duration.zero).then(
+        (value) => ref.read(newMessageCountProvider.notifier).resetCount());
     super.initState();
   }
 
@@ -87,6 +87,7 @@ class _MessagesPageState extends ConsumerState<MessagesPage> {
 
 class MessagesWidget extends StatelessWidget {
   final Message message;
+
   // final bool isCurrentUser;
 
   const MessagesWidget(

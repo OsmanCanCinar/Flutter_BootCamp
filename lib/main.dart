@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton/pages/messages_page.dart';
 import 'package:flutter_skeleton/pages/students_page.dart';
 import 'package:flutter_skeleton/pages/teachers_page.dart';
-import 'package:flutter_skeleton/repositories/messages_repository.dart';
+import 'package:flutter_skeleton/repositories/new_message_count_repository.dart';
 import 'package:flutter_skeleton/repositories/students_repository.dart';
 import 'package:flutter_skeleton/repositories/teachers_repository.dart';
 
 void main() {
-  runApp(const SkeletonApp());
+  runApp(const ProviderScope(child: SkeletonApp()));
 }
 
 class SkeletonApp extends StatelessWidget {
@@ -64,7 +64,7 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final studentsRepository = ref.watch(studentsProvider);
     final teachersRepository = ref.watch(teachersProvider);
-    final messagesRepository = ref.watch(messagesProvider);
+    final newMessageCount = ref.watch(newMessageCountProvider);
 
     return Scaffold(
       drawer: Drawer(
@@ -126,7 +126,7 @@ class HomePage extends ConsumerWidget {
                   // Navigator.of(context).pushNamed('/messages');
                   _navigateToMessagePage(context);
                 },
-                child: Text("${messagesRepository.newMessageCount} Messages")),
+                child: Text("$newMessageCount Messages")),
           ],
         ),
       ),
