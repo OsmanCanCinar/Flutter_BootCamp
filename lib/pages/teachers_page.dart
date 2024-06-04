@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton/models/teacher.dart';
 import 'package:flutter_skeleton/repositories/teachers_repository.dart';
 
-class TeachersPage extends StatefulWidget {
+class TeachersPage extends ConsumerWidget {
   final String title;
-  final TeachersRepository repository;
 
-  const TeachersPage(
-      {super.key, required this.title, required this.repository});
+  const TeachersPage({super.key, required this.title});
 
   @override
-  State<TeachersPage> createState() => _TeachersPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final repository = ref.watch(teachersProvider);
 
-class _TeachersPageState extends State<TeachersPage> {
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text(title),
       ),
       body: Center(
         child: Column(
@@ -33,7 +29,7 @@ class _TeachersPageState extends State<TeachersPage> {
                   padding: const EdgeInsets.symmetric(
                       vertical: 32.0, horizontal: 32.0),
                   child: Text(
-                    "${widget.repository.teachers.length} Teachers",
+                    "${repository.teachers.length} Teachers",
                   ),
                 ),
               ),
@@ -41,7 +37,7 @@ class _TeachersPageState extends State<TeachersPage> {
             Expanded(
               child: ListView.separated(
                 itemBuilder: (context, index) =>
-                    TeacherRow(teacher: widget.repository.teachers[index]),
+                    TeacherRow(teacher: repository.teachers[index]),
                 separatorBuilder: (context, index) => const Divider(),
                 itemCount: 2,
               ),

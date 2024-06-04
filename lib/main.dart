@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton/pages/messages_page.dart';
 import 'package:flutter_skeleton/pages/students_page.dart';
 import 'package:flutter_skeleton/pages/teachers_page.dart';
@@ -34,48 +35,37 @@ class SkeletonApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  MessagesRepository messagesRepository = MessagesRepository();
-  StudentsRepository studentsRepository = StudentsRepository();
-  TeachersRepository teachersRepository = TeachersRepository();
 
   void _navigateToStudentPage(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return StudentsPage(
-        title: 'Students',
-        repository: studentsRepository,
-      );
+      return const StudentsPage(title: 'Students');
     }));
   }
 
   void _navigateToTeacherPage(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return TeachersPage(
+      return const TeachersPage(
         title: 'Teachers',
-        repository: teachersRepository,
       );
     }));
   }
 
   Future<void> _navigateToMessagePage(BuildContext context) async {
     await Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return MessagesPage(
+      return const MessagesPage(
         title: 'Students',
-        repository: messagesRepository,
       );
     }));
-    setState(() {}); // Before riverpod
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final studentsRepository = ref.watch(studentsProvider);
+    final teachersRepository = ref.watch(teachersProvider);
+    final messagesRepository = ref.watch(messagesProvider);
+
     return Scaffold(
       drawer: Drawer(
         child: ListView(

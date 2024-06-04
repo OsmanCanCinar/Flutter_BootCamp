@@ -1,33 +1,31 @@
-import 'dart:math';
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton/models/message.dart';
-import 'package:flutter_skeleton/repositories/messages_repository.dart';
+import 'package:flutter_skeleton/repositories/new_message_count_repository.dart';
 
-class MessagesPage extends StatefulWidget {
+import '../repositories/messages_repository.dart';
+
+class MessagesPage extends ConsumerStatefulWidget {
   final String title;
-  final MessagesRepository repository;
 
-  const MessagesPage(
-      {super.key, required this.title, required this.repository});
+  const MessagesPage({super.key, required this.title});
 
   @override
-  State<MessagesPage> createState() => _MessagesPageState();
+  ConsumerState<MessagesPage> createState() => _MessagesPageState();
 }
 
-class _MessagesPageState extends State<MessagesPage> {
+class _MessagesPageState extends ConsumerState<MessagesPage> {
+
   @override
   void initState() {
-    widget.repository.newMessageCount = 0;
+    ref.read(newMessageCountProvider.notifier).resetCount();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final repository = ref.watch(messagesProvider);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -38,15 +36,15 @@ class _MessagesPageState extends State<MessagesPage> {
           Expanded(
             child: ListView.builder(
               reverse: true,
-              itemCount: widget.repository.messages.length,
+              itemCount: repository.messages.length,
               itemBuilder: (context, index) {
                 // bool isCurrentUser = Random().nextBool();
                 // return MessagesWidget(isCurrentUser: isCurrentUser);
-                if (index > widget.repository.messages.length) {
+                if (index > repository.messages.length) {
                   return null;
                 }
-                return MessagesWidget(widget.repository
-                    .messages[widget.repository.messages.length - index - 1]);
+                return MessagesWidget(repository
+                    .messages[repository.messages.length - index - 1]);
               },
             ),
           ),
@@ -89,7 +87,6 @@ class _MessagesPageState extends State<MessagesPage> {
 
 class MessagesWidget extends StatelessWidget {
   final Message message;
-
   // final bool isCurrentUser;
 
   const MessagesWidget(
