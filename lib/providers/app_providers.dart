@@ -11,7 +11,7 @@ final studentsProvider = ChangeNotifierProvider((ref) {
 });
 
 final teachersProvider = ChangeNotifierProvider((ref) {
-  return TeachersRepository();
+  return TeachersRepository(ref.watch(networkServiceProvider));
 });
 
 final messagesProvider = ChangeNotifierProvider((ref) {

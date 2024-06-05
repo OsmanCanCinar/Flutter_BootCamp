@@ -36,14 +36,9 @@ class TeachersPage extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  Align(
+                  const Align(
                     alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.download),
-                      onPressed: () {
-                        ref.read(teachersProvider).download();
-                      },
-                    ),
+                    child: DownloadButton(),
                   ),
                 ],
               ),
@@ -60,6 +55,45 @@ class TeachersPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+class DownloadButton extends StatefulWidget {
+  const DownloadButton({
+    super.key,
+  });
+
+  @override
+  State<DownloadButton> createState() => _DownloadButtonState();
+}
+
+class _DownloadButtonState extends State<DownloadButton> {
+  bool isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer(builder: (context, ref, child) {
+      return isLoading
+          ? const CircularProgressIndicator()
+          : IconButton(
+              icon: const Icon(Icons.download),
+              onPressed: () async {
+                try {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  await ref.read(teachersProvider).download();
+                } catch (e) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(e.toString())));
+                } finally {
+                  setState(() {
+                    isLoading = false;
+                  });
+                }
+              },
+            );
+    });
   }
 }
 

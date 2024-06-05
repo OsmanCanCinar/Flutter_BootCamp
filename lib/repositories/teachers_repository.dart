@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_skeleton/models/teacher.dart';
+import 'package:flutter_skeleton/services/network_service.dart';
 
 class TeachersRepository extends ChangeNotifier {
   final List<Teacher> teachers = [
@@ -9,17 +8,12 @@ class TeachersRepository extends ChangeNotifier {
     Teacher(name: 'Kate', surname: 'Wild', age: 20, gender: 'female'),
   ];
 
-  void download() {
-    const jsonBody = """{
-      'name': 'Jane',
-      'surname': 'Doe',
-      'age': 27,
-      'gender': 'female',
-    }""";
+  final NetworkService networkService;
 
-    final decodedMap = jsonDecode(jsonBody);
+  TeachersRepository(this.networkService);
 
-    final teacher = Teacher.fromMap(decodedMap);
+  Future<void> download() async {
+    Teacher teacher = await networkService.getNewTeacher();
     teachers.add(teacher);
     notifyListeners();
   }
