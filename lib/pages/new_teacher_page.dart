@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_skeleton/providers/app_providers.dart';
+
+import '../models/teacher.dart';
 
 class NewTeacherPage extends ConsumerStatefulWidget {
   final String title;
@@ -13,6 +16,7 @@ class NewTeacherPage extends ConsumerStatefulWidget {
 class _NewTeacherPageState extends ConsumerState<NewTeacherPage> {
   final Map<String, dynamic> entries = {};
   final _formKey = GlobalKey<FormState>();
+  bool isSaving = false;
 
   @override
   Widget build(BuildContext context) {
@@ -101,16 +105,37 @@ class _NewTeacherPageState extends ConsumerState<NewTeacherPage> {
                     return null;
                   },
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      final formSate = _formKey.currentState;
-                      if (formSate == null) return;
-                      if (formSate.validate() == true) {
-                        formSate.save();
-                        print(entries);
-                      }
-                    },
-                    child: const Text('Save')),
+                isSaving
+                    ? Center(child: const CircularProgressIndicator())
+                    : ElevatedButton(
+                        onPressed: () async {
+                          final formSate = _formKey.currentState;
+                          if (formSate == null) return;
+
+                          if (formSate.validate() == true) {
+                            formSate.save();
+                            print(entries);
+                          }
+
+                          try {
+                            setState(() {
+                              isSaving = true;
+                            });
+
+                            await ref
+                                .read(networkServiceProvider)
+                                .addTeacher(Teacher.fromMap(entries));
+                            Navigator.of(context).pop();
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())));
+                          } finally {
+                            setState(() {
+                              isSaving = false;
+                            });
+                          }
+                        },
+                        child: const Text('Save')),
               ],
             ),
           ),
