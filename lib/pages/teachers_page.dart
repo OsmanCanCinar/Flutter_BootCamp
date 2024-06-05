@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton/models/teacher.dart';
-import 'package:flutter_skeleton/repositories/teachers_repository.dart';
+
+import '../providers/app_providers.dart';
 
 class TeachersPage extends ConsumerWidget {
   final String title;
@@ -41,7 +42,7 @@ class TeachersPage extends ConsumerWidget {
                       icon: const Icon(Icons.download),
                       onPressed: () {
                         ref.read(teachersProvider).download();
-                       },
+                      },
                     ),
                   ),
                 ],

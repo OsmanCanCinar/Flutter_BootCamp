@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton/models/student.dart';
-import 'package:flutter_skeleton/repositories/students_repository.dart';
+
+import '../providers/app_providers.dart';
 
 class StudentsPage extends ConsumerWidget {
   final String title;

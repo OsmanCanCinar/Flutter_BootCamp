@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton/models/teacher.dart';
 
 class TeachersRepository extends ChangeNotifier {
@@ -25,7 +24,3 @@ class TeachersRepository extends ChangeNotifier {
     notifyListeners();
   }
 }
-
-final teachersProvider = ChangeNotifierProvider((ref) {
-  return TeachersRepository();
-});

@@ -7,8 +7,3 @@ class NewMessageCount extends StateNotifier<int> {
     state = 0;
   }
 }
-
-final newMessageCountProvider =
-    StateNotifierProvider<NewMessageCount, int>((ref) {
-  return NewMessageCount(4);
-});

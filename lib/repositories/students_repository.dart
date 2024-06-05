@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton/models/student.dart';
 
 class StudentsRepository extends ChangeNotifier {
@@ -24,7 +23,3 @@ class StudentsRepository extends ChangeNotifier {
     return likedStudents.contains(student);
   }
 }
-
-final studentsProvider = ChangeNotifierProvider((ref) {
-  return StudentsRepository();
-});

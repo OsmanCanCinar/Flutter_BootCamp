@@ -3,9 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton/pages/messages_page.dart';
 import 'package:flutter_skeleton/pages/students_page.dart';
 import 'package:flutter_skeleton/pages/teachers_page.dart';
-import 'package:flutter_skeleton/repositories/new_message_count_repository.dart';
-import 'package:flutter_skeleton/repositories/students_repository.dart';
-import 'package:flutter_skeleton/repositories/teachers_repository.dart';
+import 'package:flutter_skeleton/providers/app_providers.dart';
 
 void main() {
   runApp(const ProviderScope(child: SkeletonApp()));
