@@ -24,14 +24,27 @@ class TeachersPage extends ConsumerWidget {
             PhysicalModel(
               color: Colors.white,
               elevation: 4,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 32.0, horizontal: 32.0),
-                  child: Text(
-                    "${repository.teachers.length} Teachers",
+              child: Stack(
+                children: [
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 32.0, horizontal: 32.0),
+                      child: Text(
+                        "${repository.teachers.length} Teachers",
+                      ),
+                    ),
                   ),
-                ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      icon: const Icon(Icons.download),
+                      onPressed: () {
+                        ref.read(teachersProvider).download();
+                       },
+                    ),
+                  ),
+                ],
               ),
             ),
             Expanded(
@@ -39,7 +52,7 @@ class TeachersPage extends ConsumerWidget {
                 itemBuilder: (context, index) =>
                     TeacherRow(teacher: repository.teachers[index]),
                 separatorBuilder: (context, index) => const Divider(),
-                itemCount: 2,
+                itemCount: repository.teachers.length,
               ),
             ),
           ],
