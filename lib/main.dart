@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton/pages/messages_page.dart';
+import 'package:flutter_skeleton/pages/new_teacher_page.dart';
 import 'package:flutter_skeleton/pages/students_page.dart';
 import 'package:flutter_skeleton/pages/teachers_page.dart';
 import 'package:flutter_skeleton/providers/app_providers.dart';
@@ -21,14 +22,15 @@ class SkeletonApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(),
-      // initialRoute: '/',
-      // routes: {
-      //   '/': (context) => const HomePage(),
-      //   '/students': (context) => const StudentsPage(title: 'Students'),
-      //   '/teachers': (context) => const TeachersPage(title: 'Teachers'),
-      //   '/messages': (context) => const MessagesPage(title: 'Messages'),
-      // },
+      // home: const HomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(),
+        '/students': (context) => const StudentsPage(title: 'Students'),
+        '/teachers': (context) => const TeachersPage(title: 'Teachers'),
+        '/messages': (context) => const MessagesPage(title: 'Messages'),
+        '/newTeacher': (context) => const NewTeacherPage(title: 'Add Teacher'),
+      },
     );
   }
 }
@@ -78,22 +80,22 @@ class HomePage extends ConsumerWidget {
             ListTile(
               title: const Text('Students'),
               onTap: () {
-                // Navigator.of(context).pushNamed('/students');
-                _navigateToStudentPage(context);
+                Navigator.of(context).pushNamed('/students');
+                //_navigateToStudentPage(context);
               },
             ),
             ListTile(
               title: const Text('Teachers'),
               onTap: () {
-                // Navigator.of(context).pushNamed('/teachers');
-                _navigateToTeacherPage(context);
+                Navigator.of(context).pushNamed('/teachers');
+                //_navigateToTeacherPage(context);
               },
             ),
             ListTile(
               title: const Text('Messages'),
               onTap: () {
-                // Navigator.of(context).pushNamed('/messages');
-                _navigateToMessagePage(context);
+                Navigator.of(context).pushNamed('/messages');
+                // _navigateToMessagePage(context);
               },
             ),
           ],
@@ -109,20 +111,20 @@ class HomePage extends ConsumerWidget {
           children: [
             TextButton(
                 onPressed: () {
-                  // Navigator.of(context).pushNamed('/students');
-                  _navigateToStudentPage(context);
+                  Navigator.of(context).pushNamed('/students');
+                  // _navigateToStudentPage(context);
                 },
                 child: Text("${studentsRepository.students.length} Students")),
             TextButton(
                 onPressed: () {
-                  // Navigator.of(context).pushNamed('/teachers');
-                  _navigateToTeacherPage(context);
+                  Navigator.of(context).pushNamed('/teachers');
+                  // _navigateToTeacherPage(context);
                 },
                 child: Text("${teachersRepository.teachers.length} Teachers")),
             TextButton(
                 onPressed: () {
-                  // Navigator.of(context).pushNamed('/messages');
-                  _navigateToMessagePage(context);
+                  Navigator.of(context).pushNamed('/messages');
+                  // _navigateToMessagePage(context);
                 },
                 child: Text("$newMessageCount Messages")),
           ],

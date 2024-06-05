@@ -54,6 +54,12 @@ class TeachersPage extends ConsumerWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).pushNamed('/newTeacher');
+        },
+      ),
     );
   }
 }
