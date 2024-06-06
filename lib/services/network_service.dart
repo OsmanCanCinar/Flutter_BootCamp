@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 class NetworkService {
   final String baseUrl = "https://666021e15425580055b25c6f.mockapi.io/";
 
+  int retryCount = 0;
+
   Future<Teacher> getNewTeacher() async {
     final response = await http.get(Uri.parse('${baseUrl}teachers/teachers/1'));
 
@@ -30,6 +32,18 @@ class NetworkService {
     } else {
       throw Exception(
           'Post Request Failed with ${response.statusCode} error code');
+    }
+  }
+
+  Future<List<Teacher>> getAllTeachers() async {
+    final response = await http.get(Uri.parse('${baseUrl}teachers/teachers'));
+    retryCount++;
+    // if (response.statusCode == 200) {
+    if (response.statusCode == (retryCount < 4 ? 100 : 200)) {
+      final data = jsonDecode(response.body);
+      return data.map<Teacher>((e) => Teacher.fromMap(e)).toList();
+    } else {
+      throw Exception('Download Failed with ${response.statusCode} error code');
     }
   }
 

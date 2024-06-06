@@ -106,34 +106,16 @@ class _NewTeacherPageState extends ConsumerState<NewTeacherPage> {
                   },
                 ),
                 isSaving
-                    ? Center(child: const CircularProgressIndicator())
+                    ? const Center(child: CircularProgressIndicator())
                     : ElevatedButton(
                         onPressed: () async {
                           final formSate = _formKey.currentState;
                           if (formSate == null) return;
-
                           if (formSate.validate() == true) {
                             formSate.save();
                             print(entries);
                           }
-
-                          try {
-                            setState(() {
-                              isSaving = true;
-                            });
-
-                            await ref
-                                .read(networkServiceProvider)
-                                .addTeacher(Teacher.fromMap(entries));
-                            Navigator.of(context).pop();
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(e.toString())));
-                          } finally {
-                            setState(() {
-                              isSaving = false;
-                            });
-                          }
+                          _saveButtonOnClicked();
                         },
                         child: const Text('Save')),
               ],
@@ -142,5 +124,39 @@ class _NewTeacherPageState extends ConsumerState<NewTeacherPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _saveButtonOnClicked() async {
+    bool isDone = false;
+
+    while (!isDone) {
+      try {
+        setState(() {
+          isSaving = true;
+        });
+        await save();
+        // Calculated Mistake
+        isDone = true;
+        Navigator.of(context).pop();
+      } catch (e) {
+        final snackBar = ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+        await snackBar.closed;
+      } finally {
+        setState(() {
+          isSaving = false;
+        });
+      }
+    }
+  }
+
+  int i = 0;
+
+  Future<void> save() async {
+    i++;
+    if (i < 3) {
+      throw 'Cant Save!';
+    }
+    await ref.read(networkServiceProvider).addTeacher(Teacher.fromMap(entries));
   }
 }

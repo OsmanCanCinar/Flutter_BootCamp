@@ -44,13 +44,30 @@ class TeachersPage extends ConsumerWidget {
               ),
             ),
             Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) =>
-                    TeacherRow(teacher: repository.teachers[index]),
-                separatorBuilder: (context, index) => const Divider(),
-                itemCount: repository.teachers.length,
-              ),
-            ),
+                child: RefreshIndicator(
+              onRefresh: () async {
+                ref.refresh(teacherListProvider);
+              },
+              child: ref.watch(teacherListProvider).when(
+                    data: (data) => ListView.separated(
+                      itemBuilder: (context, index) =>
+                          TeacherRow(teacher: data[index]),
+                      separatorBuilder: (context, index) => const Divider(),
+                      itemCount: data.length,
+                    ),
+                    error: (error, stackTrace) {
+                      return SingleChildScrollView(
+                          // To accomplish pull to refresh on empty lists.
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          child: Text(error.toString()));
+                    },
+                    loading: () {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  ),
+            )),
           ],
         ),
       ),

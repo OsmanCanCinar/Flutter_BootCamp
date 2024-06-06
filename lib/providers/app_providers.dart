@@ -26,3 +26,7 @@ final newMessageCountProvider =
 final networkServiceProvider = Provider<NetworkService>((ref) {
   return NetworkService();
 });
+
+final teacherListProvider = FutureProvider((ref) {
+  return ref.watch(teachersProvider).getAllTeachers();
+});
