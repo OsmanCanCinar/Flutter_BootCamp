@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton/models/message.dart';
 
 import '../providers/app_providers.dart';
-import '../repositories/messages_repository.dart';
 
 class MessagesPage extends ConsumerStatefulWidget {
   final String title;

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "886629206295",
+    "firebase_url": "https://flutter-skeleton-temp-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "flutter-skeleton-temp",
+    "storage_bucket": "flutter-skeleton-temp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886629206295:android:1ad724d75e762aecbe4f52",
+        "android_client_info": {
+          "package_name": "com.osmancancinar.flutter_skeleton"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT2UGlt_JfAXoGdKTIc_gm1Cyscm4ScSI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
