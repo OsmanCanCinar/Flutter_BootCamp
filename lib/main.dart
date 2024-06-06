@@ -27,7 +27,7 @@ class SkeletonApp extends StatelessWidget {
       // home: const HomePage(),
       initialRoute: '/splash',
       routes: {
-        '/': (context) => const HomePage(),
+        '/home': (context) => const HomePage(),
         '/splash': (context) => const SplashScreen(),
         '/students': (context) => const StudentsPage(title: 'Students'),
         '/teachers': (context) => const TeachersPage(title: 'Teachers'),

@@ -67,4 +67,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'flutter-skeleton-temp.appspot.com',
     iosBundleId: 'com.osmancancinar.flutterSkeleton',
   );
+
 }
