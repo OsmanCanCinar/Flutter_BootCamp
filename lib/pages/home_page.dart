@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton/pages/messages_page.dart';
 import 'package:flutter_skeleton/pages/students_page.dart';
@@ -197,9 +199,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data != null) {
                     final picture = snapshot.data!;
-                    return CircleAvatar(
-                      backgroundImage: MemoryImage(picture),
-                    );
+                    return _MovingAvatar(picture: picture);
                   } else {
                     return const CircleAvatar(
                       child: Text('OCD'),
@@ -208,6 +208,51 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 }),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _MovingAvatar extends StatefulWidget {
+  final Uint8List picture;
+
+  const _MovingAvatar({super.key, required this.picture});
+
+  @override
+  State<_MovingAvatar> createState() => _MovingAvatarState();
+}
+
+class _MovingAvatarState extends State<_MovingAvatar>
+    with SingleTickerProviderStateMixin<_MovingAvatar> {
+  late Ticker _ticker;
+  double horizontal = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _ticker = createTicker((Duration elapsed) {
+      final angle = pi *
+          elapsed.inMicroseconds /
+          const Duration(seconds: 1).inMicroseconds;
+      setState(() {
+        horizontal = sin(angle) * 30 + 30;
+      });
+    });
+    _ticker.start();
+  }
+
+  @override
+  void dispose() {
+    _ticker.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: horizontal),
+      child: CircleAvatar(
+        backgroundImage: MemoryImage(widget.picture),
       ),
     );
   }
