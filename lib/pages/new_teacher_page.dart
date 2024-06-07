@@ -134,7 +134,7 @@ class _NewTeacherPageState extends ConsumerState<NewTeacherPage> {
         setState(() {
           isSaving = true;
         });
-        await save();
+        await saveToFirestore();
         // Calculated Mistake
         isDone = true;
         Navigator.of(context).pop();
@@ -146,17 +146,18 @@ class _NewTeacherPageState extends ConsumerState<NewTeacherPage> {
         setState(() {
           isSaving = false;
         });
+        isDone = true;
       }
     }
   }
 
-  int i = 0;
+  // int i = 0;
 
-  Future<void> save() async {
-    i++;
-    if (i < 3) {
-      throw 'Cant Save!';
-    }
+  Future<void> saveToFirestore() async {
+    // i++;
+    // if (i < 3) {
+    //   throw 'Cant Save!';
+    // }
     await ref.read(networkServiceProvider).addTeacher(Teacher.fromMap(entries));
   }
 }

@@ -17,7 +17,7 @@ class Teacher {
             age: m['age'],
             gender: m['gender']);
 
-  Map toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'name': name,
       'surname': surname,

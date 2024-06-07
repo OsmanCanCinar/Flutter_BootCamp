@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_skeleton/providers/app_providers.dart';
 import 'package:flutter_skeleton/pages/messages_page.dart';
 import 'package:flutter_skeleton/pages/students_page.dart';
 import 'package:flutter_skeleton/pages/teachers_page.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_skeleton/providers/app_providers.dart';
+import 'package:flutter_skeleton/utilities/google_sign_in.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -48,7 +48,7 @@ class HomePage extends ConsumerWidget {
                 color: Colors.blue,
               ),
               child: Text(
-                  'Welcome ${FirebaseAuth.instance.currentUser!.displayName!}'),
+                  'Welcome ${FirebaseAuth.instance.currentUser?.displayName}'),
             ),
             ListTile(
               title: const Text('Students'),
@@ -74,7 +74,7 @@ class HomePage extends ConsumerWidget {
             ListTile(
               title: const Text('Log Out'),
               onTap: () async {
-                signOutWithGoogle();
+                GoogleSignInApi.signOutWithGoogle();
                 Navigator.of(context).pushReplacementNamed('/');
               },
             ),
@@ -111,10 +111,5 @@ class HomePage extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  Future<void> signOutWithGoogle() async {
-    await FirebaseAuth.instance.signOut();
-    await GoogleSignIn().signOut();
   }
 }

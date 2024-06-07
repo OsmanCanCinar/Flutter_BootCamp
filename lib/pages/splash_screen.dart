@@ -1,8 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import '../firebase_options.dart';
 import 'package:flutter/material.dart';
 
+import '../firebase_options.dart';
 import '../utilities/google_sign_in.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -29,8 +30,23 @@ class _SplashScreenState extends State<SplashScreen> {
             ? ElevatedButton(
                 onPressed: () async {
                   try {
-                    await GoogleSignInApi.signInWithGoogle();
+                    UserCredential userCredential =
+                        await GoogleSignInApi.signInWithGoogle();
+                    // await GoogleSignInApi.login();
                     print('Log In Successful');
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(FirebaseAuth.instance.currentUser == null
+                            ? userCredential.user?.uid
+                            : FirebaseAuth.instance.currentUser!.uid)
+                        .set(
+                      {
+                        "isLoggedIn": true,
+                        "lastLoginDate": FieldValue.serverTimestamp(),
+                      },
+                      SetOptions(merge: true),
+                    );
+                    print('user added to collection Successfully');
                     Navigator.of(context).pushReplacementNamed('/home');
                   } catch (e) {
                     print('Log In Unsuccessful');
