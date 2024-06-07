@@ -13,10 +13,17 @@ class NewTeacherPage extends ConsumerStatefulWidget {
   ConsumerState<NewTeacherPage> createState() => _NewTeacherPageState();
 }
 
-class _NewTeacherPageState extends ConsumerState<NewTeacherPage> {
+class _NewTeacherPageState extends ConsumerState<NewTeacherPage>
+    with SingleTickerProviderStateMixin {
   final Map<String, dynamic> entries = {};
   final _formKey = GlobalKey<FormState>();
   bool isSaving = false;
+  late final AnimationController animationController =
+      AnimationController(vsync: this);
+  final alignmentTween = Tween<AlignmentGeometry>(
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +46,9 @@ class _NewTeacherPageState extends ConsumerState<NewTeacherPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                ScaleTransition(
+                    scale: animationController,
+                    child: const Icon(Icons.person, size: 200)),
                 TextFormField(
                   decoration: const InputDecoration(
                     label: Text('Name'),
@@ -80,6 +90,13 @@ class _NewTeacherPageState extends ConsumerState<NewTeacherPage> {
                   onSaved: (newValue) {
                     entries['age'] = int.parse(newValue!);
                   },
+                  onChanged: (value) {
+                    final v = double.parse(value);
+                    animationController.animateTo(
+                      v / 100,
+                      duration: const Duration(seconds: 1),
+                    );
+                  },
                 ),
                 DropdownButtonFormField(
                   items: const [
@@ -107,17 +124,20 @@ class _NewTeacherPageState extends ConsumerState<NewTeacherPage> {
                 ),
                 isSaving
                     ? const Center(child: CircularProgressIndicator())
-                    : ElevatedButton(
-                        onPressed: () async {
-                          final formSate = _formKey.currentState;
-                          if (formSate == null) return;
-                          if (formSate.validate() == true) {
-                            formSate.save();
-                            print(entries);
-                          }
-                          _saveButtonOnClicked();
-                        },
-                        child: const Text('Save')),
+                    : AlignTransition(
+                        alignment: alignmentTween.animate(animationController),
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              final formSate = _formKey.currentState;
+                              if (formSate == null) return;
+                              if (formSate.validate() == true) {
+                                formSate.save();
+                                print(entries);
+                              }
+                              _saveButtonOnClicked();
+                            },
+                            child: const Text('Save')),
+                      ),
               ],
             ),
           ),
