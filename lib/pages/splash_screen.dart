@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import '../firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -27,12 +28,14 @@ class _SplashScreenState extends State<SplashScreen> {
         child: isFirebaseInitialized
             ? ElevatedButton(
                 onPressed: () async {
-                  try{
-                    await signInWithGoogle();
-                  }catch(e) {
+                  try {
+                    await GoogleSignInApi.signInWithGoogle();
+                    print('Log In Successful');
+                    Navigator.of(context).pushReplacementNamed('/home');
+                  } catch (e) {
+                    print('Log In Unsuccessful');
                     print(e.toString());
                   }
-                  Navigator.of(context).pushReplacementNamed('/home');
                 },
                 child: const Text('Sign In'))
             : const CircularProgressIndicator(),
@@ -48,5 +51,8 @@ class _SplashScreenState extends State<SplashScreen> {
       isFirebaseInitialized = true;
     });
     print('Firebase initialized');
+    if (FirebaseAuth.instance.currentUser != null) {
+      Navigator.of(context).pushReplacementNamed('/home');
+    }
   }
 }

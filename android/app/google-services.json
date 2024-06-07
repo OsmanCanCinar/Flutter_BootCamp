@@ -13,7 +13,20 @@
           "package_name": "com.osmancancinar.flutter_skeleton"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "886629206295-c8vhn57sbt3lt34rh5udkkksrntl5b3a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.osmancancinar.flutter_skeleton",
+            "certificate_hash": "aa0885d60a3ce134cc08689ed1fc2a9b11eea8dd"
+          }
+        },
+        {
+          "client_id": "886629206295-4n9dei8vpeonl576999vhp49bah1cb3t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDT2UGlt_JfAXoGdKTIc_gm1Cyscm4ScSI"
@@ -21,7 +34,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "886629206295-4n9dei8vpeonl576999vhp49bah1cb3t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "886629206295-4d4qvv95bj9qq7umk06ukarllh9ouma9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.osmancancinar.flutterSkeleton"
+              }
+            }
+          ]
         }
       }
     }

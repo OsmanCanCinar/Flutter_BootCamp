@@ -7,7 +7,6 @@ import 'package:flutter_skeleton/pages/splash_screen.dart';
 import 'package:flutter_skeleton/pages/students_page.dart';
 import 'package:flutter_skeleton/pages/teachers_page.dart';
 
-
 void main() {
   runApp(const ProviderScope(child: SkeletonApp()));
 }
@@ -24,11 +23,11 @@ class SkeletonApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: const HomePage(),
-      initialRoute: '/splash',
+      // home: const SplashScreen(),
+      initialRoute: '/',
       routes: {
+        '/': (context) => const SplashScreen(),
         '/home': (context) => const HomePage(),
-        '/splash': (context) => const SplashScreen(),
         '/students': (context) => const StudentsPage(title: 'Students'),
         '/teachers': (context) => const TeachersPage(title: 'Teachers'),
         '/messages': (context) => const MessagesPage(title: 'Messages'),
@@ -37,4 +36,3 @@ class SkeletonApp extends StatelessWidget {
     );
   }
 }
-
