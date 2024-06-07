@@ -77,11 +77,23 @@ class StudentRow extends ConsumerWidget {
             localRepository.like(student);
           }
         },
-        icon: Icon(repository.isLiked(student)
-            ? Icons.favorite
-            : Icons.favorite_border),
+        icon: AnimatedCrossFade(
+          firstChild: const Icon(Icons.favorite),
+          secondChild: const Icon(Icons.favorite_border),
+          crossFadeState: repository.isLiked(student)
+              ? CrossFadeState.showFirst
+              : CrossFadeState.showSecond,
+          duration: const Duration(seconds: 1),
+        ),
       ),
-      title: Text('${student.name} ${student.surname}'),
+      title: AnimatedPadding(
+        curve: Curves.bounceOut,
+        padding: repository.isLiked(student)
+            ? const EdgeInsets.only(left: 48.0)
+            : EdgeInsets.zero,
+        duration: const Duration(seconds: 1),
+        child: Text('${student.name} ${student.surname}'),
+      ),
     );
   }
 }

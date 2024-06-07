@@ -11,7 +11,7 @@ class TeachersPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final repository = ref.watch(teachersProvider);
+    final teachersRepository = ref.watch(teachersProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -31,8 +31,15 @@ class TeachersPage extends ConsumerWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 32.0, horizontal: 32.0),
-                      child: Text(
-                        "${repository.teachers.length} Teachers",
+                      child: Hero(
+                        tag: 'teacher',
+                        child: Material(
+                          child: Container(
+                              color: Colors.grey.shade300,
+                              padding: const EdgeInsets.all(40.0),
+                              child: Text(
+                                  "${teachersRepository.teachers.length} Teachers")),
+                        ),
                       ),
                     ),
                   ),

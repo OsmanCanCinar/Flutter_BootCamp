@@ -98,11 +98,21 @@ class HomePage extends ConsumerWidget {
                 },
                 child: Text("${studentsRepository.students.length} Students")),
             TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/teachers');
-                  // _navigateToTeacherPage(context);
-                },
-                child: Text("${teachersRepository.teachers.length} Teachers")),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/teachers');
+                // _navigateToTeacherPage(context);
+              },
+              child: Hero(
+                tag: 'teacher',
+                child: Material(
+                  child: Container(
+                      color: Colors.grey.shade300,
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                          "${teachersRepository.teachers.length} Teachers")),
+                ),
+              ),
+            ),
             TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed('/messages');
