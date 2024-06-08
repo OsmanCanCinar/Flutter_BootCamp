@@ -41,13 +41,12 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ),
           SizedBox(
-            width: 200,
-            height: 200,
-            // child: RiveAnimation.network(
-            //   'https://rive.app/community/files/10144-19383-soarus.riv',
-            // ),
-            child: Lottie.asset('animations/Animation-1717795778489.json')
-          ),
+              width: 200,
+              height: 200,
+              // child: RiveAnimation.network(
+              //   'https://rive.app/community/files/10144-19383-soarus.riv',
+              // ),
+              child: Lottie.asset('animations/Animation-1717795778489.json')),
           Center(
             child: isFirebaseInitialized
                 ? ElevatedButton(
@@ -92,8 +91,11 @@ class _SplashScreenState extends State<SplashScreen> {
       isFirebaseInitialized = true;
     });
     print('Firebase initialized');
-    if (FirebaseAuth.instance.currentUser != null) {
-      Navigator.of(context).pushReplacementNamed('/home');
-    }
+
+    // Commented out for integration test
+    // if (FirebaseAuth.instance.currentUser != null) {
+    //   Navigator.of(context).pushReplacementNamed('/home');
+    // }
+    Navigator.of(context).pushReplacementNamed('/home');
   }
 }
